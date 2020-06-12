@@ -10,3 +10,7 @@ html {
 	margin-top: 40px;
 }
 
+#thumbnail-image, #watermarked-image {
+	margin-top: 25px;
+}
+
