@@ -67,17 +67,19 @@ function processImage(selectedFile) {
 		makeThumbnail(imageName, image, width, height);
 		watermarkFile = getWatermarkFile(width, height);
 		watermark([selectedFile, watermarkFile], options)
-			.image(watermark.image.center(0.1))
-			.then(img => document.getElementById('result').appendChild(img)) // To-do: get as canvas
+		.image(watermark.image.center(0.1))
+		.then(function(img) {
+			document.getElementById('result').appendChild(img)
 
-		var downloadLink = document.createElement("a");
-		downloadLink.href = document.querySelector("#watermarked-image > img").src;
-		downloadLink.download = imageName + "_watermarked.jpeg";
-		downloadLink.textContent = "Download watermarked image";
-		var paragraphWrapper = document.createElement("p");
-		paragraphWrapper.appendChild(downloadLink);
-		document.getElementById("watermarked-image").appendChild(paragraphWrapper);
+			var downloadLink = document.createElement("a");
+			downloadLink.href = document.querySelector("#watermarked-image > img").src;
+			downloadLink.download = imageName + "_watermarked.jpeg";
+			downloadLink.textContent = "Download watermarked image";
+			var paragraphWrapper = document.createElement("p");
+			paragraphWrapper.appendChild(downloadLink);
+			document.getElementById("watermarked-image").appendChild(paragraphWrapper);
 
+		})
 	}
 }
 
