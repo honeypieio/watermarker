@@ -69,7 +69,7 @@ function processImage(selectedFile) {
 		watermark([selectedFile, watermarkFile], options)
 		.image(watermark.image.center(0.1))
 		.then(function(img) {
-			document.getElementById('result').appendChild(img)
+			document.getElementById('watermarked-image').appendChild(img)
 
 			var downloadLink = document.createElement("a");
 			downloadLink.href = document.querySelector("#watermarked-image > img").src;
