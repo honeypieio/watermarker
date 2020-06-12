@@ -1,0 +1,12 @@
+html {
+	color: #333;
+}
+
+.centered {
+	justify-content: center;
+}
+
+.header {
+	margin-top: 40px;
+}
+
