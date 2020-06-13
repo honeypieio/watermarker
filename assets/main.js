@@ -88,16 +88,18 @@ function processImage(selectedFile, index, totalFiles) {
 		makeThumbnail(dir, imageName, image, width, height);
 		watermarkFile = getWatermarkFile(width, height);
 		watermark([selectedFile, watermarkFile], options)
-		.image(watermark.image.center(0.085))
+		.image(watermark.image.center(0.06))
 		.then(function(img) {
 			document.getElementById("watermarked-image").innerHTML = "";
 			document.getElementById('watermarked-image').appendChild(img);
 			imageName += "-watermarked.png";
-			dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/png;base64,")[1], { base64: true });
-			document.getElementById("watermarked-image").appendChild(createDownloadLink(document.querySelector("#watermarked-image > img").src, imageName, width, height));
-			if(index == (totalFiles - 1)){
-				zipItUp();
-			}
+			setTimeout(function() {
+				dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/png;base64,")[1], { base64: true });
+				document.getElementById("watermarked-image").appendChild(createDownloadLink(document.querySelector("#watermarked-image > img").src, imageName, width, height));
+				if(index == (totalFiles - 1)){
+					zipItUp();
+				}
+			}, 100);
 		})
 	}
 }
