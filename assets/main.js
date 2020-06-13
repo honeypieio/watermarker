@@ -76,6 +76,10 @@ function createDownloadLink(src, imageName, width, height) {
 }
 
 function processImage(selectedFiles, index, totalFiles) {
+
+	document.getElementById("watermarked-image").innerHTML = "";
+	document.getElementById("thumbnail-image").innerHTML = "";
+
 	var options = {
 		init(img) {
     			img.crossOrigin = 'anonymous'
@@ -94,7 +98,7 @@ function processImage(selectedFiles, index, totalFiles) {
 
 			watermarkFile = getWatermarkFile(width, height);
 			watermark([selectedFile, watermarkFile], options)
-			.image(watermark.image.center(0.06))
+			.image(watermark.image.center(0.75))
 			.then(function(img) {
 				document.getElementById("watermarked-image").innerHTML = "";
 				document.getElementById('watermarked-image').appendChild(img);
