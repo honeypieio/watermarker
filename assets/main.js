@@ -17,8 +17,7 @@ window.onload = function() {
 function zipItUp() {
 	zip.generateAsync({ type:"blob" })
 		.then(function(content) {
-		// Force down of the Zip file
-		saveAs(content, "archive.zip");
+		saveAs(content, "processed-images-" + Date.now() + ".zip");
 	});
 }
 
@@ -93,8 +92,8 @@ function processImage(selectedFile, index, totalFiles) {
 		.then(function(img) {
 			document.getElementById("watermarked-image").innerHTML = "";
 			document.getElementById('watermarked-image').appendChild(img);
-			imageName += "-watermarked.jpeg";
-			dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/jpeg;base64,")[1], { base64: true });
+			imageName += "-watermarked.png";
+			dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/png;base64,")[1], { base64: true });
 			document.getElementById("watermarked-image").appendChild(createDownloadLink(document.querySelector("#watermarked-image > img").src, imageName, width, height));
 			if(index == (totalFiles - 1)){
 				zipItUp();
