@@ -8,9 +8,10 @@ window.onload = function() {
 		var selectedFiles = document.getElementById('image-to-process').files;
 		zip = new JSZip();
 		var totalFiles = Object.keys(selectedFiles).length;
-		Object.keys(selectedFiles).forEach(function(key, value){
-			processImage(selectedFiles[key], key, totalFiles);
-		})
+		var index = 0;
+		if(totalFiles > 0) {
+			processImage(selectedFiles, index, totalFiles);
+		}
 	});
 }
 
@@ -36,7 +37,7 @@ function getWatermarkFile(width, height) {
 	return url;
 }
 
-function makeThumbnail(dir, imageName, image, width, height) {
+function makeThumbnail(dir, imageName, image, width, height, callback) {
 	var canvas = document.createElement('canvas');
 	var ctx = canvas.getContext('2d');
 	var scaleFactor;
@@ -58,6 +59,9 @@ function makeThumbnail(dir, imageName, image, width, height) {
 	imageName += "-thumbnail.jpg";
 	dir.file(imageName, canvas.toDataURL("image/jpeg").split("data:image/jpeg;base64,")[1], { base64: true });
 	document.getElementById("thumbnail-image").appendChild(createDownloadLink(canvas.toDataURL("image/jpeg"), imageName, canvas.width, canvas.height));
+	setTimeout(function() {
+		callback();
+	}, 500);
 }
 
 function createDownloadLink(src, imageName, width, height) {
@@ -71,13 +75,14 @@ function createDownloadLink(src, imageName, width, height) {
 	return paragraphWrapper;
 }
 
-function processImage(selectedFile, index, totalFiles) {
+function processImage(selectedFiles, index, totalFiles) {
 	var options = {
 		init(img) {
     			img.crossOrigin = 'anonymous'
   		}
 	}
 
+	var selectedFile = selectedFiles[index];
 	var image = new Image();
 	image.src = window.URL.createObjectURL(selectedFile);
 	image.onload = function() {
@@ -85,21 +90,26 @@ function processImage(selectedFile, index, totalFiles) {
                 var height = image.naturalHeight;
 		var imageName = selectedFile.name.split(".")[0] // Get filename without file extension.
 		var dir = zip.folder(imageName);
-		makeThumbnail(dir, imageName, image, width, height);
-		watermarkFile = getWatermarkFile(width, height);
-		watermark([selectedFile, watermarkFile], options)
-		.image(watermark.image.center(0.06))
-		.then(function(img) {
-			document.getElementById("watermarked-image").innerHTML = "";
-			document.getElementById('watermarked-image').appendChild(img);
-			imageName += "-watermarked.png";
-			setTimeout(function() {
-				dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/png;base64,")[1], { base64: true });
-				document.getElementById("watermarked-image").appendChild(createDownloadLink(document.querySelector("#watermarked-image > img").src, imageName, width, height));
-				if(index == (totalFiles - 1)){
-					zipItUp();
-				}
-			}, 100);
-		})
+		makeThumbnail(dir, imageName, image, width, height, function(){
+
+			watermarkFile = getWatermarkFile(width, height);
+			watermark([selectedFile, watermarkFile], options)
+			.image(watermark.image.center(0.06))
+			.then(function(img) {
+				document.getElementById("watermarked-image").innerHTML = "";
+				document.getElementById('watermarked-image').appendChild(img);
+				imageName += "-watermarked.png";
+				setTimeout(function() {
+					dir.file(imageName, document.querySelector("#watermarked-image > img").src.split("data:image/png;base64,")[1], { base64: true });
+					document.getElementById("watermarked-image").appendChild(createDownloadLink(document.querySelector("#watermarked-image > img").src, imageName, width, height));
+					if(index == (totalFiles - 1)){
+						zipItUp();
+					} else {
+						index += 1;
+						processImage(selectedFiles, index, totalFiles);
+					}
+				}, 500);
+			})
+		});
 	}
 }
