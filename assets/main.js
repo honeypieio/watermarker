@@ -98,7 +98,7 @@ function processImage(selectedFiles, index, totalFiles) {
 
 			watermarkFile = getWatermarkFile(width, height);
 			watermark([selectedFile, watermarkFile], options)
-			.image(watermark.image.center(0.75))
+			.image(watermark.image.center(0.075))
 			.then(function(img) {
 				document.getElementById("watermarked-image").innerHTML = "";
 				document.getElementById('watermarked-image').appendChild(img);
