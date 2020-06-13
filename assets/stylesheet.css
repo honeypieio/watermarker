@@ -10,6 +10,14 @@ html {
 	margin-top: 40px;
 }
 
+#file-select {
+	margin-bottom: 20px;
+}
+
+#output-sample-header {
+	display: none;
+}
+
 #thumbnail-image, #watermarked-image {
 	margin-top: 25px;
 }
