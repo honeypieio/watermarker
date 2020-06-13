@@ -57,7 +57,6 @@ function makeThumbnail(dir, imageName, image, width, height) {
 	document.getElementById("thumbnail-image").appendChild(canvas);
 
 	imageName += "-thumbnail.jpg";
-	console.log(canvas.toDataURL("image/jpeg"));
 	dir.file(imageName, canvas.toDataURL("image/jpeg").split("data:image/jpeg;base64,")[1], { base64: true });
 	document.getElementById("thumbnail-image").appendChild(createDownloadLink(canvas.toDataURL("image/jpeg"), imageName, canvas.width, canvas.height));
 }
