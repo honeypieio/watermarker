@@ -6,6 +6,7 @@
 		<title>JAA Watermarker</title>
 		<link rel="stylesheet" href="assets/stylesheet.css" />
 		<link rel="stylesheet" href="assets/vendor/pure.min.css" />
+		<script src="assets/watermarks.js"></script>
 		<script src="assets/main.js"></script>
 		<script src="assets/vendor/watermark.min.js"></script>
 		<script src="assets/vendor/jszip.min.js"></script>
@@ -22,13 +23,27 @@
 					<input type="file" id="image-to-process" accept="image/png, image/jpeg" multiple="multiple" />
 					<button id="process-image-button" class="pure-button pure-button-primary">Process Image(s)</button>
 				</div>
+				<div id="option-select">
+					<div class="d-block">
+						<label for="thumb-width">Thumbnail Width</label>
+						<input id="thumb-width" type="number" value=350 step=50 min=250 max=750 />
+						<label for="thumb-width">px</label>
+					</div>
+					<div class="d-block mt-1">
+						<label for="watermarked-width">Watermarked Width</label>
+						<input id="watermarked-width" type="number" value=750 step=50 min=750 max=2000 />
+						<label for="watermarked-width">px</label>
+					</div>
+
+				</div>
+				
 				<div id="zipped-up"></div>
 				<div id="output-sample-header">
 					<hr />
 					<h4>Sample</h4>
 				</div>
-				<div id="thumbnail-image"></div>
-				<div id="watermarked-image"></div>
+				<div id="thumbnail-image" class="mt-2"></div>
+				<div id="watermarked-image" class="mt-2"></div>
 			</div>
 		</div>
 	</body>

@@ -10,15 +10,23 @@ html {
 	margin-top: 40px;
 }
 
+.d-block {
+	display: block;
+}
+
+.mt-1 {
+	margin-top: 15px;
+}
+
+.mt-2 {
+	margin-top: 25px;
+}
+
 #file-select {
 	margin-bottom: 20px;
 }
 
 #output-sample-header {
 	display: none;
-}
-
-#thumbnail-image, #watermarked-image {
-	margin-top: 25px;
 }
 
