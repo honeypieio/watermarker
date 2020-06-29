@@ -76,7 +76,7 @@ function formatImage(dir, imageName, imageType, image, width, height, callback) 
 	ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 	
 	if(imageType == "watermarked"){
-
+		imageName += "-watermarked.jpg"
 		var options = {
 			init(img) {
 				img.crossOrigin = 'anonymous'
